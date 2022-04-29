@@ -2,9 +2,8 @@
 5
 -1 0 0 1 1
 2
+일자인 경우 예외가 존재한다.
 """
-import sys
-sys.setrecursionlimit(100000)
 N = int(input())
 parent = list(map(int, input().split()))
 root = 0

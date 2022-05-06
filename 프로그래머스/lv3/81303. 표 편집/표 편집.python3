@@ -1,0 +1,39 @@
+"""
+이중 연결 리스트로 작성해야함
+"""
+def solution(n, k, cmd):
+    answer = ''
+    L = {}
+    for i in range(-1, n):
+        L[i] = [i-1, i+1]
+    L[n-1][1] = -1
+    stack = []
+    for c in cmd:
+        cs = c.split()
+        if cs[0] == 'U':
+            for i in range(int(cs[1])):
+                k = L[k][0]
+        elif cs[0] == 'D':
+            for i in range(int(cs[1])):
+                k = L[k][1]
+        elif cs[0] == 'C':  # 스택에 입력
+            stack.append(k)
+            un = L[k][0]
+            dn = L[k][1]
+            L[un][1] = dn
+            L[dn][0] = un
+            
+            if L[k][1] == -1:
+                k = L[k][0]
+            else:
+                k = L[k][1]
+        elif cs[0] == 'Z':  # 스택에서 하나 뽑아서 복구
+            rk = stack.pop()
+            un, dn = L[rk]
+            L[un][1] = rk
+            L[dn][0] = rk
+    answer = ["O" for i in range(n)]
+    for i in stack:
+        answer[i] = "X"
+    
+    return "".join(answer)

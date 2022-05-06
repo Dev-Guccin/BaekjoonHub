@@ -1,0 +1,56 @@
+"""
+맨허튼 거리 : abs(r1-r2) + abs(c1-c2)
+"""
+def check(P, Map):
+    # 상하 좌우 체크
+    dy = [-1,0,1,0]
+    dx = [0,1,0,-1]
+    y,x = P
+    for i in range(4):
+        oy = y + dy[i]
+        ox = x + dx[i]
+        my = y + dy[i]*2
+        mx = x + dx[i]*2
+        if ((0<= oy < 5) and (0<= ox < 5)) == False:
+            continue
+        if Map[oy][ox] == 'P': # 붙어있는 경우
+            return False
+        if ((0<= my < 5) and (0<= mx < 5)) == False:
+            continue
+        if Map[my][mx] == 'P' and Map[oy][ox] != 'X': # 떨어져있는데 맨허튼 2인경우
+            return False
+    # 크로스 체크
+    dcy = [-1,1,1,-1]
+    dcx = [1,1,-1,-1]
+    for i in range(4):
+        my = y + dcy[i]
+        mx = x + dcx[i]
+        if ((0<= my < 5) and (0<= mx <5)) == False:
+            continue
+        if Map[my][mx] == "P":
+            print(i)
+            print(y,x)
+            print(my,mx)
+            Ay = y + dy[i]
+            Ax = x + dx[i]
+            By = y + dy[(i+1)%4]
+            Bx = x + dx[(i+1)%4]
+            print(Ay,Ax, By,Bx)
+            if (Map[Ay][Ax] == "X" and Map[By][Bx] == "X") == False: # 크로스에 위치하나 파티션이 제대로 없는 경우
+                return False    
+    return True
+def panCheck(Map):
+    for y in range(5):
+        for x in range(5):
+            if Map[y][x] == "P":
+                if check([y,x], Map) == False:
+                        return False
+    return True
+def solution(places):
+    answer = []
+    for i in range(5):
+        if panCheck(places[i]):
+            answer.append(1)
+        else:
+            answer.append(0)
+    return answer

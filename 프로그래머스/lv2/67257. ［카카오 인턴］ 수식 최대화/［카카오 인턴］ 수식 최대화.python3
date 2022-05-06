@@ -1,0 +1,45 @@
+from collections import deque
+from itertools import permutations
+def init(expression, q):
+    start = 0
+    end = 1
+    while end < len(expression):
+        if expression[end] in ['+','-','*']:
+            q.append(int(expression[start:end]))
+            q.append(expression[end])
+            start = end + 1
+            end = start + 1
+        else:
+            end += 1
+    q.append(int(expression[start:]))
+def calc(A,B,op):
+    if op == '-':
+        return A-B
+    elif op == '+':
+        return A+B
+    else:
+        return A*B
+def solution(expression):
+    answer = 0
+    
+    iq = []
+    init(expression,iq)
+    print(iq)
+    perms = list(permutations(['-','+','*'],3))
+    print(perms)
+    
+    for perm in perms:
+        q = list(iq)
+        for i in range(3):
+            nq = []
+            for j in q:
+                nq.append(j)
+                if len(nq) >= 3 and nq[-2] == perm[i]:# 연산가능
+                    B = nq.pop()
+                    OP = nq.pop()
+                    A = nq.pop()
+                    C = calc(A,B,OP)
+                    nq.append(C)
+            q = nq
+        answer = max(answer, abs(q[0]))
+    return answer

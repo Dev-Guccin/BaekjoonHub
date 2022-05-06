@@ -1,0 +1,9 @@
+-- out는 존재하나, ins에 없는 
+-- where 에서 서브 쿼리를 날려도 될거 같고
+-- join을 통해 datetime이 비어있는걸 찾아도 될듯
+
+
+select o.animal_id, o.name
+from animal_outs o left join animal_ins i on o.animal_id = i.animal_id
+where i.datetime is null
+order by o.animal_id asc

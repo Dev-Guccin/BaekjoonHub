@@ -1,0 +1,41 @@
+"""
+설마 투포인터? => 시간 초과
+"""
+def check(dic):
+    flag = True
+    for key in dic.keys():
+        if dic[key] == 0:
+            return False
+    return True
+
+def dupCheck(L,gems,dic):
+    while L<len(gems):
+        if dic[gems[L]] > 1:
+            dic[gems[L]] -= 1
+            L+=1
+        else:
+            break
+    return L
+        
+def solution(gems):
+    answer = [0,100000]
+    N = len(set(gems))
+    dic = {}
+    
+    L = 0
+    R = 0
+    dic[gems[L]] = 1
+    while R < len(gems):
+        if len(dic.keys()) == N:
+            if answer[1] - answer[0] > R-L:
+                answer = [L+1,R+1]
+        if R == len(gems)-1: #끝에 다다른경우
+            break
+        R+=1
+        if gems[R] in dic:
+            dic[gems[R]]+=1
+        else:
+            dic[gems[R]] = 1
+        
+        L = dupCheck(L,gems,dic)   
+    return answer

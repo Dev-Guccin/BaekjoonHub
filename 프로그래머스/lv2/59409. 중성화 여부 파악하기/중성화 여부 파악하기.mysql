@@ -1,0 +1,6 @@
+-- 스칼라 쿼리
+select animal_id, name, 
+    (CASE WHEN SEX_UPON_INTAKE like "Neutered%" or SEX_UPON_INTAKE like "Spayed%"
+     THEN "O" ELSE "X" END) 중성화
+from animal_ins
+order by animal_id

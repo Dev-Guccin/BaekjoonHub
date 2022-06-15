@@ -38,9 +38,6 @@ for e in range(len(S)):
 
         for i in range(N):
             word = words[i]
-            # 길이 검증
-            if len(target) != len(word):
-                continue
             # 철자 검증
             if D[word] != targetDic:
                 continue
